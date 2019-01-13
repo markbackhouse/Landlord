@@ -25,7 +25,7 @@ public class StraightMove implements Move {
     private boolean cardListIsConsecutive() {
         cards.sort();
 
-        int jokersThatCanBeUsed = getJokerCount();
+        int jokersThatCanBeUsed = cards.getJokerCount();
         int runningValue = getLowestCardValue();
 
         List<Card> cardsWithoutJokers = removeJokers();
@@ -41,12 +41,6 @@ public class StraightMove implements Move {
             }
         }
         return true;
-    }
-
-    private int getJokerCount() {
-        return (int) cards.getCards().stream()
-                .filter(Card::isJoker)
-                .count();
     }
 
     private List<Card> removeJokers() {

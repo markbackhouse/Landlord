@@ -6,6 +6,8 @@ import lombok.Setter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -24,10 +26,21 @@ public class CardList {
         return cards.size();
     }
 
+    public Map<Integer, Long> getFrequencies() {
+        return cards.stream()
+                .collect(Collectors.groupingBy(Card::getValue, Collectors.counting()));
+    }
+
     public boolean containsBothJokers() {
         return cards.stream()
                 .filter(Card::isJoker)
                 .count() == 2;
+    }
+
+    public int getJokerCount() {
+        return (int) cards.stream()
+                .filter(Card::isJoker)
+                .count();
     }
 
     public boolean containsJoker() {
