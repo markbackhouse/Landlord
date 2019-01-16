@@ -1,4 +1,4 @@
-package models.moves;
+package moves;
 
 import models.Card;
 import models.CardList;
@@ -8,8 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static models.CardName.*;
-import static models.Suit.DIAMONDS;
-import static models.Suit.HEARTS;
+import static models.Suit.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

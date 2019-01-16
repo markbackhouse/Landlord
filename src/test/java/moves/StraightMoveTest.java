@@ -1,4 +1,4 @@
-package models.moves;
+package moves;
 
 import models.Card;
 import models.CardList;

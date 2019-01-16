@@ -1,8 +1,9 @@
-package models.moves;
+package moves;
 
 import lombok.Getter;
 import models.CardList;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 

@@ -1,6 +1,6 @@
 package models;
 
-import models.moves.Move;
+import moves.Move;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package models.moves;
+package moves;
 
 import lombok.Getter;
 import models.CardList;

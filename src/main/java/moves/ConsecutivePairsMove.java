@@ -1,4 +1,4 @@
-package models.moves;
+package moves;
 
 public class ConsecutivePairsMove {
 }
