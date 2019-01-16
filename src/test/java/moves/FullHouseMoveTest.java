@@ -23,8 +23,7 @@ public class FullHouseMoveTest {
                 Card.builder().name(FOUR).suit(HEARTS).build()
         );
 
-        CardList cards = new CardList(cardList);
-        Move fullHouseMove = new FullHouseMove(cards);
+        Move fullHouseMove = new FullHouseMove(new CardList(cardList));
 
         assertTrue(fullHouseMove.isValid());
     }
@@ -47,10 +46,8 @@ public class FullHouseMoveTest {
                 Card.builder().name(FOUR).suit(HEARTS).build()
         );
 
-        CardList cardsA = new CardList(cardListA);
-        CardList cardsB = new CardList(cardListB);
-        Move fullHouseMoveA = new FullHouseMove(cardsA);
-        Move fullHouseMoveB = new FullHouseMove(cardsB);
+        Move fullHouseMoveA = new FullHouseMove(new CardList(cardListA));
+        Move fullHouseMoveB = new FullHouseMove(new CardList(cardListB));
 
         assertTrue(fullHouseMoveA.isValid());
         assertTrue(fullHouseMoveB.isValid());
@@ -74,10 +71,8 @@ public class FullHouseMoveTest {
                 Card.builder().name(FOUR).suit(HEARTS).build()
         );
 
-        CardList cardsA = new CardList(cardListA);
-        CardList cardsB = new CardList(cardListB);
-        Move fullHouseMoveA = new FullHouseMove(cardsA);
-        Move fullHouseMoveB = new FullHouseMove(cardsB);
+        Move fullHouseMoveA = new FullHouseMove(new CardList(cardListA));
+        Move fullHouseMoveB = new FullHouseMove(new CardList(cardListB));
 
         assertTrue(fullHouseMoveA.isValid());
         assertTrue(fullHouseMoveB.isValid());
@@ -94,8 +89,7 @@ public class FullHouseMoveTest {
                 Card.builder().name(FOUR).suit(HEARTS).build()
         );
 
-        CardList cardsA = new CardList(cardListA);
-        Move fullHouseMoveA = new FullHouseMove(cardsA);
+        Move fullHouseMoveA = new FullHouseMove(new CardList(cardListA));
 
         assertFalse("Full house should have 5 cards", fullHouseMoveA.isValid());
     }
@@ -110,8 +104,7 @@ public class FullHouseMoveTest {
                 Card.builder().name(FOUR).suit(HEARTS).build()
         );
 
-        CardList cardsA = new CardList(cardListA);
-        Move fullHouseMoveA = new FullHouseMove(cardsA);
+        Move fullHouseMoveA = new FullHouseMove(new CardList(cardListA));
 
         assertFalse("Full house should have 3 of a kind and a pair", fullHouseMoveA.isValid());
     }
@@ -134,12 +127,60 @@ public class FullHouseMoveTest {
                 Card.builder().name(FOUR).suit(HEARTS).build()
         );
 
-        CardList cardsA = new CardList(cardListA);
-        CardList cardsB = new CardList(cardListB);
-        Move fullHouseMoveA = new FullHouseMove(cardsA);
-        Move fullHouseMoveB = new FullHouseMove(cardsB);
+        Move fullHouseMoveA = new FullHouseMove(new CardList(cardListA));
+        Move fullHouseMoveB = new FullHouseMove(new CardList(cardListB));
 
         assertFalse("Cannot get both 3 of a kind and a pair in this case with one joker", fullHouseMoveA.isValid());
         assertFalse("Cannot get both 3 of a kind and a pair in this case with two jokers", fullHouseMoveB.isValid());
+    }
+
+    @Test
+    public void shouldBeatOtherHand() {
+        List<Card> thisListNoJokers = Arrays.asList(
+                Card.builder().name(TWO).suit(HEARTS).build(),
+                Card.builder().name(TWO).suit(CLUBS).build(),
+                Card.builder().name(TWO).suit(DIAMONDS).build(),
+                Card.builder().name(FOUR).suit(HEARTS).build(),
+                Card.builder().name(FOUR).suit(SPADES).build()
+        );
+
+        List<Card> thisListOneJoker = Arrays.asList(
+                Card.builder().name(TWO).suit(HEARTS).build(),
+                Card.builder().name(TWO).suit(CLUBS).build(),
+                Card.builder().name(JOKER_A).suit(DIAMONDS).build(),
+                Card.builder().name(FOUR).suit(HEARTS).build(),
+                Card.builder().name(FOUR).suit(SPADES).build()
+        );
+
+        List<Card> thisListTwoJokers = Arrays.asList(
+                Card.builder().name(TWO).suit(HEARTS).build(),
+                Card.builder().name(JOKER_A).suit(CLUBS).build(),
+                Card.builder().name(JOKER_B).suit(DIAMONDS).build(),
+                Card.builder().name(FOUR).suit(HEARTS).build(),
+                Card.builder().name(FOUR).suit(SPADES).build()
+        );
+
+        List<Card> otherList = Arrays.asList(
+                Card.builder().name(FIVE).suit(HEARTS).build(),
+                Card.builder().name(FIVE).suit(SPADES).build(),
+                Card.builder().name(FIVE).suit(DIAMONDS).build(),
+                Card.builder().name(SEVEN).suit(CLUBS).build(),
+                Card.builder().name(SEVEN).suit(HEARTS).build()
+        );
+
+        Move thisMoveNoJokers = new FullHouseMove(new CardList(thisListNoJokers));
+        Move thisMoveOneJoker = new FullHouseMove(new CardList(thisListOneJoker));
+        Move thisMoveTwoJokers = new FullHouseMove(new CardList(thisListTwoJokers));
+
+        Move otherMove = new FullHouseMove(new CardList(otherList));
+
+        assertTrue(thisMoveNoJokers.beats(otherMove));
+        assertTrue(thisMoveOneJoker.beats(otherMove));
+        assertTrue(thisMoveTwoJokers.beats(otherMove));
+    }
+
+    @Test
+    public void shouldNotBeatOtherHand() {
+
     }
 }
