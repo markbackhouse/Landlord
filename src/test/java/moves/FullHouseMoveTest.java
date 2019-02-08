@@ -181,6 +181,46 @@ public class FullHouseMoveTest {
 
     @Test
     public void shouldNotBeatOtherHand() {
+        List<Card> thisListNoJokers = Arrays.asList(
+                Card.builder().name(FOUR).suit(HEARTS).build(),
+                Card.builder().name(FOUR).suit(CLUBS).build(),
+                Card.builder().name(FOUR).suit(DIAMONDS).build(),
+                Card.builder().name(KING).suit(HEARTS).build(),
+                Card.builder().name(KING).suit(SPADES).build()
+        );
 
+        List<Card> thisListOneJoker = Arrays.asList(
+                Card.builder().name(THREE).suit(HEARTS).build(),
+                Card.builder().name(THREE).suit(CLUBS).build(),
+                Card.builder().name(JOKER_A).suit(DIAMONDS).build(),
+                Card.builder().name(FOUR).suit(HEARTS).build(),
+                Card.builder().name(FOUR).suit(SPADES).build()
+        );
+
+        List<Card> thisListTwoJokers = Arrays.asList(
+                Card.builder().name(THREE).suit(HEARTS).build(),
+                Card.builder().name(JOKER_A).suit(CLUBS).build(),
+                Card.builder().name(JOKER_B).suit(DIAMONDS).build(),
+                Card.builder().name(FOUR).suit(HEARTS).build(),
+                Card.builder().name(FOUR).suit(SPADES).build()
+        );
+
+        List<Card> otherList = Arrays.asList(
+                Card.builder().name(FIVE).suit(HEARTS).build(),
+                Card.builder().name(FIVE).suit(SPADES).build(),
+                Card.builder().name(FIVE).suit(DIAMONDS).build(),
+                Card.builder().name(SEVEN).suit(CLUBS).build(),
+                Card.builder().name(SEVEN).suit(HEARTS).build()
+        );
+
+        Move thisMoveNoJokers = new FullHouseMove(new CardList(thisListNoJokers));
+        Move thisMoveOneJoker = new FullHouseMove(new CardList(thisListOneJoker));
+        Move thisMoveTwoJokers = new FullHouseMove(new CardList(thisListTwoJokers));
+
+        Move otherMove = new FullHouseMove(new CardList(otherList));
+
+        assertFalse(thisMoveNoJokers.beats(otherMove));
+        assertFalse(thisMoveOneJoker.beats(otherMove));
+        assertFalse(thisMoveTwoJokers.beats(otherMove));
     }
 }
