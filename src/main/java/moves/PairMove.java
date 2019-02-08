@@ -5,7 +5,7 @@ import models.CardList;
 
 @Getter
 public class PairMove implements Move {
-    CardList cards;
+    private CardList cards;
 
     public PairMove(CardList cards) {
         this.cards = cards;
