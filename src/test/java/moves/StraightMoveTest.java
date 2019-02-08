@@ -113,21 +113,114 @@ public class StraightMoveTest {
 
     @Test
     public void shouldBeatOtherMoveWithMoreCards() {
+        List<Card> thisList = Arrays.asList(
+                Card.builder().name(FOUR).suit(HEARTS).build(),
+                Card.builder().name(FIVE).suit(CLUBS).build(),
+                Card.builder().name(SIX).suit(DIAMONDS).build(),
+                Card.builder().name(SEVEN).suit(HEARTS).build(),
+                Card.builder().name(EIGHT).suit(SPADES).build(),
+                Card.builder().name(NINE).suit(SPADES).build()
+        );
 
+        List<Card> otherList = Arrays.asList(
+                Card.builder().name(FOUR).suit(HEARTS).build(),
+                Card.builder().name(FIVE).suit(HEARTS).build(),
+                Card.builder().name(SIX).suit(SPADES).build(),
+                Card.builder().name(SEVEN).suit(DIAMONDS).build(),
+                Card.builder().name(EIGHT).suit(CLUBS).build()
+        );
+
+        Move thisMove = new StraightMove(new CardList(thisList));
+
+        Move otherMove = new StraightMove(new CardList(otherList));
+
+        assertTrue(thisMove.beats(otherMove));
     }
 
     @Test
     public void shouldBeatOtherMoveUsingJokers() {
+        List<Card> listWithJokerHighCard = Arrays.asList(
+                Card.builder().name(FIVE).suit(CLUBS).build(),
+                Card.builder().name(SIX).suit(DIAMONDS).build(),
+                Card.builder().name(SEVEN).suit(HEARTS).build(),
+                Card.builder().name(EIGHT).suit(SPADES).build(),
+                Card.builder().name(JOKER_A).build()
+        );
 
+        List<Card> listWithJokerInTheMiddle = Arrays.asList(
+                Card.builder().name(FIVE).suit(CLUBS).build(),
+                Card.builder().name(SIX).suit(DIAMONDS).build(),
+                Card.builder().name(JOKER_B).build(),
+                Card.builder().name(EIGHT).suit(SPADES).build(),
+                Card.builder().name(NINE).suit(SPADES).build()
+        );
+
+        List<Card> otherList = Arrays.asList(
+                Card.builder().name(FOUR).suit(HEARTS).build(),
+                Card.builder().name(FIVE).suit(HEARTS).build(),
+                Card.builder().name(SIX).suit(SPADES).build(),
+                Card.builder().name(SEVEN).suit(DIAMONDS).build(),
+                Card.builder().name(EIGHT).suit(CLUBS).build()
+        );
+
+        Move moveWithJokerHighCard = new StraightMove(new CardList(listWithJokerHighCard));
+        Move moveWithJokerInTheMiddle = new StraightMove(new CardList(listWithJokerInTheMiddle));
+
+        Move otherMove = new StraightMove(new CardList(otherList));
+
+        assertTrue(moveWithJokerHighCard.beats(otherMove));
+        assertTrue(moveWithJokerInTheMiddle.beats(otherMove));
     }
 
     @Test
     public void shouldNotBeatOtherMoveShortStraight() {
+        List<Card> thisList = Arrays.asList(
+                Card.builder().name(NINE).suit(CLUBS).build(),
+                Card.builder().name(TEN).suit(DIAMONDS).build(),
+                Card.builder().name(JACK).suit(HEARTS).build(),
+                Card.builder().name(QUEEN).suit(SPADES).build(),
+                Card.builder().name(KING).build()
+        );
 
+        List<Card> otherList = Arrays.asList(
+                Card.builder().name(FOUR).suit(HEARTS).build(),
+                Card.builder().name(FIVE).suit(HEARTS).build(),
+                Card.builder().name(SIX).suit(SPADES).build(),
+                Card.builder().name(SEVEN).suit(DIAMONDS).build(),
+                Card.builder().name(EIGHT).suit(CLUBS).build(),
+                Card.builder().name(NINE).suit(CLUBS).build()
+        );
+
+        Move moveWithJokerHighCard = new StraightMove(new CardList(thisList));
+
+        Move otherMove = new StraightMove(new CardList(otherList));
+
+        assertFalse(moveWithJokerHighCard.beats(otherMove));
     }
 
     @Test
     public void shouldNotBeatOtherMoveHighCard() {
+        List<Card> thisList = Arrays.asList(
+                Card.builder().name(FOUR).suit(HEARTS).build(),
+                Card.builder().name(FIVE).suit(HEARTS).build(),
+                Card.builder().name(SIX).suit(SPADES).build(),
+                Card.builder().name(SEVEN).suit(DIAMONDS).build(),
+                Card.builder().name(EIGHT).suit(CLUBS).build(),
+                Card.builder().name(NINE).suit(CLUBS).build()
+        );
 
+        List<Card> otherList = Arrays.asList(
+                Card.builder().name(FIVE).suit(HEARTS).build(),
+                Card.builder().name(SIX).suit(SPADES).build(),
+                Card.builder().name(SEVEN).suit(DIAMONDS).build(),
+                Card.builder().name(EIGHT).suit(CLUBS).build(),
+                Card.builder().name(NINE).suit(CLUBS).build()
+        );
+
+        Move moveWithJokerHighCard = new StraightMove(new CardList(thisList));
+
+        Move otherMove = new StraightMove(new CardList(otherList));
+
+        assertFalse(moveWithJokerHighCard.beats(otherMove));
     }
 }

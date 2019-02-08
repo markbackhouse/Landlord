@@ -31,8 +31,17 @@ public class StraightMove implements Move {
         List<Card> cardsWithoutJokers = removeJokers();
         for (Card card : cardsWithoutJokers) {
             if (card.getValue() != runningValue) {
-                if (jokersThatCanBeUsed > 0) {
+                boolean hasAJoker = jokersThatCanBeUsed > 0;
+                boolean hasBothJokers = jokersThatCanBeUsed == 2;
+                boolean oneCardMissing = card.getValue() == runningValue + 1;
+                boolean twoConsecutiveCardsMissing = card.getValue() == runningValue + 2;
+
+                if (hasAJoker && oneCardMissing) {
                     jokersThatCanBeUsed -= 1;
+                    runningValue += 2;
+                } else if (hasBothJokers && twoConsecutiveCardsMissing) {
+                    jokersThatCanBeUsed -= 2;
+                    runningValue += 3;
                 } else {
                     return false;
                 }
