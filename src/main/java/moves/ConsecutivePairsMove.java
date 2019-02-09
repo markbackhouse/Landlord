@@ -75,6 +75,6 @@ public class ConsecutivePairsMove implements Move {
 
     private int getHighestCardValue() {
         cards.sort();
-        return 0;
+        return cards.get(0).getValue() + 2;
     }
 }
