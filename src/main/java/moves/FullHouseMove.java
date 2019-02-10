@@ -54,6 +54,11 @@ public class FullHouseMove implements Move {
                 getThreeOfAKindValue(cards.getFrequencies()) > other.getThreeOfAKindValue(other.cards.getFrequencies());
     }
 
+    @Override
+    public MoveType getType() {
+        return MoveType.FULL_HOUSE;
+    }
+
     private Integer getThreeOfAKindValue(Map<Integer, Long> frequencies) {
         Map<Integer, Long> valueFrequencies = new CardList(cards.getCards().stream()
                 .filter(c -> !c.isJoker())
@@ -69,11 +74,11 @@ public class FullHouseMove implements Move {
         }
 
         if (cards.getJokerCount() > 0) {
-                // If there is one joker, and no three of a kind, then there must be two pairs - so joker represents the greatest of these.
-                // If there are two jokers, and no three of a kind, then either both jokers can join to the single card (to make 3), or one
-                // joker can join to the pair (to make 3).
-                // In both cases, the three of a kind value is just the max. card value in the hand.
-                return Collections.max(valueFrequencies.keySet());
+            // If there is one joker, and no three of a kind, then there must be two pairs - so joker represents the greatest of these.
+            // If there are two jokers, and no three of a kind, then either both jokers can join to the single card (to make 3), or one
+            // joker can join to the pair (to make 3).
+            // In both cases, the three of a kind value is just the max. card value in the hand.
+            return Collections.max(valueFrequencies.keySet());
         }
         return 0;
     }

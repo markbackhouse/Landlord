@@ -19,10 +19,17 @@ public class PairMove implements Move {
 
     @Override
     public boolean beats(Move other) {
-        if (cards.containsBothJokers()) { return true; }
+        if (cards.containsBothJokers()) {
+            return true;
+        }
 
         return isValid() &&
                 getNonJokerValue() > ((PairMove) other).getNonJokerValue();
+    }
+
+    @Override
+    public MoveType getType() {
+        return MoveType.PAIR;
     }
 
     private int getNonJokerValue() {

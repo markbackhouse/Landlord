@@ -32,6 +32,29 @@ public class ConsecutivePairsMove implements Move {
         return containsThreePairs(numberOfPairsIgnoringJokers) && pairsAreConsecutive(valueFrequencies);
     }
 
+    @Override
+    public boolean beats(Move o) {
+        ConsecutivePairsMove other = (ConsecutivePairsMove) o;
+        return isValid()
+                && getHighestCardValue() > other.getHighestCardValue();
+    }
+
+    @Override
+    public MoveType getType() {
+        return MoveType.CONSECUTIVE_PAIRS;
+    }
+
+    private boolean containsThreePairs(long numberOfPairsIgnoringJokers) {
+        if (cards.getJokerCount() == 1) {
+            // Four of the remaining five cards must be in pairs for the joker to represent the fifth
+            return numberOfPairsIgnoringJokers == 2L;
+        } else if (cards.getJokerCount() == 2) {
+            // As long as there is a pair in the remaining four cards, the jokers can represent the remainder
+            return numberOfPairsIgnoringJokers != 0L;
+        }
+        return numberOfPairsIgnoringJokers == 3L;
+    }
+
     private boolean pairsAreConsecutive(Map<Integer, Long> valueFrequencies) {
         List<Integer> cardValues = valueFrequencies.keySet().stream()
                 .sorted()
@@ -53,24 +76,6 @@ public class ConsecutivePairsMove implements Move {
             }
         }
         return true;
-    }
-
-    @Override
-    public boolean beats(Move o) {
-        ConsecutivePairsMove other = (ConsecutivePairsMove) o;
-        return isValid()
-                && getHighestCardValue() > other.getHighestCardValue();
-    }
-
-    private boolean containsThreePairs(long numberOfPairsIgnoringJokers) {
-        if (cards.getJokerCount() == 1) {
-            // Four of the remaining five cards must be in pairs for the joker to represent the fifth
-            return numberOfPairsIgnoringJokers == 2L;
-        } else if (cards.getJokerCount() == 2) {
-            // As long as there is a pair in the remaining four cards, the jokers can represent the remainder
-            return numberOfPairsIgnoringJokers != 0L;
-        }
-        return numberOfPairsIgnoringJokers == 3L;
     }
 
     private int getHighestCardValue() {

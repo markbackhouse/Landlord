@@ -22,6 +22,19 @@ public class StraightMove implements Move {
         return cards.size() >= MIN_STRAIGHT_LENGTH && cardListIsConsecutive();
     }
 
+    @Override
+    public boolean beats(Move o) {
+        StraightMove other = (StraightMove) o;
+        return isValid()
+                && cards.size() >= other.getCards().size()
+                && getLowestCardValue() + cards.size() > other.getLowestCardValue() + other.cards.size(); // So that Joker values don't influence highest value
+    }
+
+    @Override
+    public MoveType getType() {
+        return MoveType.STRAIGHT;
+    }
+
     private boolean cardListIsConsecutive() {
         cards.sort();
 
@@ -56,14 +69,6 @@ public class StraightMove implements Move {
         return cards.getCards().stream()
                 .filter(c -> !c.isJoker())
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public boolean beats(Move o) {
-        StraightMove other = (StraightMove) o;
-        return isValid()
-                && cards.size() >= other.getCards().size()
-                && getLowestCardValue() + cards.size() > other.getLowestCardValue() + other.cards.size(); // So that Joker values don't influence highest value
     }
 
     int getLowestCardValue() {

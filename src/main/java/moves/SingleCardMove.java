@@ -22,4 +22,9 @@ public class SingleCardMove implements Move {
         return isValid() &&
                 cards.get(0).getValue() > ((SingleCardMove) other).getCards().get(0).getValue();
     }
+
+    @Override
+    public MoveType getType() {
+        return MoveType.SINGLE_CARD;
+    }
 }
