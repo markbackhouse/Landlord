@@ -5,6 +5,7 @@ import models.CardList;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Getter
@@ -68,9 +69,10 @@ public class FullHouseMove implements Move {
 
         if (containsThreeOfAKind) {
             // Card list contains three of a kind, so don't need to worry about jokers being present
-            return frequencies.keySet().stream()
+            return Optional.of(frequencies.keySet().stream()
                     .filter(cardValue -> frequencies.get(cardValue) == 3)
-                    .findAny().get();
+                    .findAny().get()
+            ).orElse(0);
         }
 
         if (cards.getJokerCount() > 0) {
