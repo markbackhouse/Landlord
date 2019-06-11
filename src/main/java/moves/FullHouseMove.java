@@ -68,10 +68,9 @@ public class FullHouseMove implements Move {
 
         if (containsThreeOfAKind) {
             // Card list contains three of a kind, so don't need to worry about jokers being present
-            return Optional.of(frequencies.keySet().stream()
+            return frequencies.keySet().stream()
                     .filter(cardValue -> frequencies.get(cardValue) == 3)
-                    .findAny().get()
-            ).orElse(0);
+                    .findAny().get();
         }
 
         if (cards.getJokerCount() > 0) {
