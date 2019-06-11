@@ -1,11 +1,14 @@
 package models;
 
 import moves.Move;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LandlordHand implements Hand {
+    private Logger log = LoggerFactory.getLogger(LandlordHand.class);
     List<Card> hand;
 
     public LandlordHand() {
@@ -27,7 +30,7 @@ public class LandlordHand implements Hand {
         if (move.isValid() && move.beats(previousMove)) {
             return move;
         } else {
-            System.out.println("Move invalid or does not beat previous move.");
+            log.warn("Move invalid or does not beat previous move.");
             return null;
         }
     }
@@ -66,7 +69,7 @@ public class LandlordHand implements Hand {
         try {
             return hand.indexOf(cardToFind);
         } catch (AssertionError e) {
-            System.out.printf("Card not in hand: {}", e);
+            log.warn("Card not in hand", e);
             return -1;
         }
     }

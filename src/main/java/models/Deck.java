@@ -1,11 +1,15 @@
 package models;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Deck {
+    private Logger log = LoggerFactory.getLogger(Deck.class);
     private List<Card> listOfCards;
 
     public Deck() {
@@ -50,7 +54,7 @@ public class Deck {
         try {
             return listOfCards.get(0);
         } catch (AssertionError e) {
-            System.out.println("Not enough cards in deck");
+            log.error("Not enough cards in deck", e);
             return null;
         }
     }
@@ -74,7 +78,7 @@ public class Deck {
                         .get(0);
             }
         } catch (AssertionError e) {
-            System.out.printf("Card not in deck: {}", e);
+            log.error("Card not in deck", e);
             return null;
         }
     }

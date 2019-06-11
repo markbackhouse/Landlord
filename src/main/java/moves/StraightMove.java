@@ -3,12 +3,15 @@ package moves;
 import lombok.Getter;
 import models.Card;
 import models.CardList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 public class StraightMove implements Move {
+    private Logger log = LoggerFactory.getLogger(StraightMove.class);
     private static final int MIN_STRAIGHT_LENGTH = 5;
 
     CardList cards;
@@ -19,7 +22,7 @@ public class StraightMove implements Move {
 
     @Override
     public boolean isValid() {
-        return cards.size() >= MIN_STRAIGHT_LENGTH && cardListIsConsecutive();
+        return hasRequiredLength(MIN_STRAIGHT_LENGTH) && isConsecutive();
     }
 
     @Override
@@ -56,6 +59,7 @@ public class StraightMove implements Move {
                     jokersThatCanBeUsed -= 2;
                     runningValue += 3;
                 } else {
+                    log.warn("Straight does not contain consecutive values");
                     return false;
                 }
             } else {
