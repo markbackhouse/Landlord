@@ -29,7 +29,7 @@ public class StraightMove implements Move {
     public boolean beats(Move o) {
         StraightMove other = (StraightMove) o;
         return isValid()
-                && cards.size() >= other.getCards().size()
+                && hasRequiredLength(other.getCards().size())
                 && getLowestCardValue() + cards.size() > other.getLowestCardValue() + other.cards.size(); // So that Joker values don't influence highest value
     }
 
@@ -38,7 +38,15 @@ public class StraightMove implements Move {
         return MoveType.STRAIGHT;
     }
 
-    private boolean cardListIsConsecutive() {
+    private boolean hasRequiredLength(int minLength) {
+        if (cards.size() < minLength) {
+            log.warn("Straight is not long enough");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isConsecutive() {
         cards.sort();
 
         int jokersThatCanBeUsed = cards.getJokerCount();
